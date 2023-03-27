@@ -1,0 +1,21 @@
+<html>
+    <h1>
+        HELLO WORLDO!
+    </h1>
+    <script>
+        var idx = 0;
+        const sock = new WebSocket("ws://" + window.location.hostname + "/ws")
+
+        sock.onmessage = (evt) => {
+            console.log(event.data);
+        }
+        
+        sock.addEventListener("open", (event) => {
+            setInterval(()=>{
+                sock.send("hello: " + idx);
+                idx = idx + 1;
+            }, 100)
+        });
+        
+    </script>
+</html>

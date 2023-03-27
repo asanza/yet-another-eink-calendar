@@ -1,0 +1,8 @@
+#ifndef ED40629D_A84F_4396_A44F_1E8F09D3F2D5
+#define ED40629D_A84F_4396_A44F_1E8F09D3F2D5
+
+#include <stdint.h>
+
+void os_msleep(uint32_t ms);
+
+#endif /* ED40629D_A84F_4396_A44F_1E8F09D3F2D5 */

@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="weather-now">
+        <div class="weather-now-icon">
+            <table>
+                <td>
+                    <img src="icons/png/128x128/{weather-now-icon}.png" alt="{weather-now}">
+                </td>
+                <td>
+                    <div class="temperature-now">{temp-now}</div>
+                    <div class="weather-now">{weather-now}</div>
+                </td>
+            </table>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="city">{city}</div>
+        <div class="date">{date}</div>
+        <br> Last Updated: {update-time}
+    </div>
+
+    <div class="hourly-forecast-1">
+        <img src="icons/png/64x64/{forecast-1-icon}.png" alt="{forecast-1-weather}">
+        <br> {forecast-1-time} <br> {forecast-1-temp} {forecast-1-weather}
+    </div>
+
+    <div class="hourly-forecast-2">
+        <img src="icons/png/64x64/{forecast-2-icon}.png" alt="{forecast-2-weather}">
+        <br> {forecast-2-time} <br> {forecast-2-temp} {forecast-2-weather}
+    </div>
+
+    <div class="hourly-forecast-3">
+        <img src="icons/png/64x64/{forecast-3-icon}.png" alt="{forecast-3-weather}">
+        <br> {forecast-3-time} <br> {forecast-3-temp} {forecast-3-weather}
+    </div>
+
+    <div class="hourly-forecast-4">
+        <img src="icons/png/64x64/{forecast-4-icon}.png" alt="{forecast-4-weather}">
+        <br> {forecast-4-time} <br> {forecast-4-temp} {forecast-4-weather}
+    </div>
+
+    <div class="hourly-forecast-5">
+        <img src="icons/png/64x64/{forecast-5-icon}.png" alt="{forecast-5-weather}">
+        <br> {forecast-5-time} <br> {forecast-5-temp} {forecast-5-weather}
+    </div>
+
+    <div class="astro">
+        <img src="wi-icons/weather/{moon-phase-icon}.png">
+    </div>
+
+    <div class="astro-text">
+        {moon-text}
+        <br> Sunrise: {sunrise}
+        <br> Sunset: {sunset}
+    </div>
+    <div class="news">
+        {news}
+    </div>
+</body>
+
+</html>

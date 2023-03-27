@@ -1,0 +1,120 @@
+.header-right {
+    grid-row: 1;
+    grid-column: 4 / span 2;
+    text-align: right;
+    font-family: Ubuntu;
+    font-size: 100%;
+}
+
+.weather-now {
+    font-size: 120%;
+    font-family: Ubuntu;
+    grid-row: 1;
+    grid-column: 1 / span 2;
+}
+
+.temperature-now {
+    padding-left: 20;
+    font-size: 400%;
+    font-family: Ubuntu;
+}
+
+.city {
+    padding-top: 15;
+    font-family: Ubuntu;
+    font-size: 25 0%;
+}
+
+.date {
+    font-size: 150%
+}
+
+.hourly-forecast-1 {
+    display: block;
+    justify-content: center;
+    font-family: Ubuntu;
+    font-size: 100%;
+    grid-row: 2;
+    grid-column: 1;
+    text-align: center;
+}
+
+.hourly-forecast-2 {
+    display: block;
+    justify-content: center;
+    font-family: Ubuntu;
+    font-size: 100%;
+    grid-row: 2;
+    grid-column: 2;
+    text-align: center;
+}
+
+.hourly-forecast-3 {
+    display: block;
+    justify-content: center;
+    font-family: Ubuntu;
+    font-size: 100%;
+    grid-row: 2;
+    grid-column: 3;
+    text-align: center;
+}
+
+.hourly-forecast-4 {
+    display: block;
+    justify-content: center;
+    font-family: Ubuntu;
+    font-size: 100%;
+    grid-row: 2;
+    grid-column: 4;
+    text-align: center;
+}
+
+.hourly-forecast-5 {
+    display: block;
+    justify-content: center;
+    font-family: Ubuntu;
+    font-size: 100%;
+    grid-row: 2;
+    grid-column: 5;
+    text-align: center;
+}
+
+.news {
+    grid-row: 3 / span 2;
+    grid-column: 1 / span 5;
+    font-size: 25;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+}
+
+.astro {
+    display: block;
+    grid-row: 1 ;
+    grid-column: 3 / span 2;
+    font-family: Ubuntu;
+    font-size: large;
+    text-align: center;
+    padding-left: 70;
+    padding-top: 10;
+}
+
+.astro-text {
+    display: block;
+    grid-row: 1;
+    grid-column: 3 / span 2;
+    font-size: larger;
+    padding-top: 30;
+}
+
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    font-family: Ubuntu;
+}

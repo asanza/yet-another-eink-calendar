@@ -1,0 +1,21 @@
+{
+    "idf.adapterTargetName": "esp32",
+    "files.associations": {
+        "esp_wifi.h": "c",
+        "spi_master.h": "c",
+        "stdlib.h": "c",
+        "*.ipp": "c",
+        "fgui.h": "c",
+        "fgui_font.h": "c",
+        "assert.h": "c",
+        "fgui_helper.h": "c",
+        "priv_wifi.h": "c",
+        "algorithm": "c",
+        "random": "c",
+        "sntp.h": "c",
+        "esp_sntp.h": "c",
+        "string.h": "c",
+        "iterator": "c",
+        "weather.h": "c"
+    }
+}
