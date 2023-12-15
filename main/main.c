@@ -30,7 +30,7 @@ static const char *TAG = "main";
 
 #define LED_PIN GPIO_NUM_2
 
-#define DEEP_SLEP_TIME_MS (300 * 1000ULL * 1000ULL)
+#define DEEP_SLEP_TIME_MS (3600 * 1000ULL)
 
 
 static uint32_t get_sleep_time( void ) {
@@ -117,7 +117,7 @@ exit:
     priv_epaper_draw(bbuf, rbuf);
     priv_epaper_sleep();
 
-    /* configure deep sleep wakeup. Wakeup each 5min */
+    /* configure deep sleep wakeup. Wakeup each hour */
     priv_wifi_stop();
     rtc_gpio_isolate(GPIO_NUM_12);
     ESP_LOGI(TAG, "Going to deep sleep. See ya!");
