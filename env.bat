@@ -1,0 +1,1 @@
+C:\Espressif\Initialize-Idf.ps1 -IdfId esp-idf-0e2582fd252b057fc2c285b273065d53

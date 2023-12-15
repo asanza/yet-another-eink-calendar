@@ -14,7 +14,7 @@
 #include "lwip/sys.h"
 
 #include "priv_wifi.h"
-#include <sntp.h>
+#include <esp_sntp.h>
 
 #define MIN(a, b)              (((a) < (b)) ? (a) : (b))
 #define MAX_HTTP_RECV_BUFFER   512
@@ -51,7 +51,7 @@ static int s_retry_num = 0;
 
 struct user_data {
     uint8_t *buffer;
-    uint32_t idx;
+    int idx;
     uint32_t type;
 };
 
@@ -147,9 +147,9 @@ priv_wifi_init(void)
 
     if( err == WIFI_ERR_NONE ) {
         ESP_LOGI(TAG, "Connecting to SNTP server pool.ntp.org");
-        sntp_setoperatingmode(SNTP_OPMODE_POLL);
-        sntp_setservername(0, "pool.ntp.org");
-        sntp_init();
+        esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
+        esp_sntp_setservername(0, "pool.ntp.org");
+        esp_sntp_init();
         while( sntp_get_sync_status() != SNTP_SYNC_STATUS_COMPLETED ) {
             vTaskDelay(1000);
         }
@@ -213,7 +213,7 @@ _http_event_handler(esp_http_client_event_t *evt)
             }
             ud->idx += copy_len;
         } else {
-            ESP_LOGI(TAG, "CHUNKED, len=%d : %d", evt->data_len, ud->idx);
+            ESP_LOGI(TAG, "CHUNKED, len=%d : %u", evt->data_len, ud->idx);
             copy_len = MIN(copy_len, (MAX_HTTP_OUTPUT_BUFFER - ud->idx));
             if (copy_len) {
                 memcpy(ud->buffer + ud->idx, data, copy_len);
@@ -252,13 +252,13 @@ _http_event_handler(esp_http_client_event_t *evt)
         // }
         // output_len = 0;
         break;
-        // case HTTP_EVENT_REDIRECT:
-        //     ESP_LOGI(TAG, "HTTP_EVENT_REDIRECT");
-        //     esp_http_client_set_header(evt->client, "From",
-        //     "user@example.com"); esp_http_client_set_header(evt->client,
-        //     "Accept", "text/html");
-        //     esp_http_client_set_redirection(evt->client);
-        //     break;
+        case HTTP_EVENT_REDIRECT:
+            ESP_LOGI(TAG, "HTTP_EVENT_REDIRECT");
+            esp_http_client_set_header(evt->client, "From",
+            "user@example.com"); esp_http_client_set_header(evt->client,
+            "Accept", "text/html");
+            esp_http_client_set_redirection(evt->client);
+            break;
     }
     return ESP_OK;
 }

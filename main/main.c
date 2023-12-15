@@ -48,7 +48,7 @@ void app_main(void)
 {
     switch(esp_sleep_get_wakeup_cause()) {
         case ESP_SLEEP_WAKEUP_TIMER:
-            ESP_LOGI(TAG, "Waking up from deep sleep after %d ms!.", get_sleep_time());
+            ESP_LOGI(TAG, "Waking up from deep sleep after %lu ms!.", get_sleep_time());
             break;
         default:
         break;
@@ -100,7 +100,7 @@ void app_main(void)
     struct wmo_weather* weather;
     weather = wmo_get_weather_from_json(bbuf, 100 * 480);
 
-    priv_epaper_draw_calendar((char*) bbuf, bbuf, rbuf, ret == OK);
+    priv_epaper_draw_calendar((char*) bbuf, bbuf, rbuf, ret == ESP_OK);
     priv_epaper_draw_weather(weather);
 
 
