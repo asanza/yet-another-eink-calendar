@@ -3,6 +3,7 @@
 import requests
 import datetime
 import json
+from pprint import pprint
 
 def chunks(s, n):
     """Produce `n`-character chunks from `s`."""
@@ -15,13 +16,25 @@ url += "latitude=48.78&longitude=9.18"
 url += "&daily=sunrise,sunset,weathercode&timezone=Europe/Berlin"
 url += "&hourly=temperature_2m,precipitation,weathercode"
 url += "&current_weather=true&timeformat=unixtime"
-url += "&start_date=2023-04-20&end_date=2023-04-22"
+url += "&start_date=2025-05-30&end_date=2025-05-31"
+
+url = "https://api.open-meteo.com"
+url += "/v1/dwd-icon?latitude=48.78"
+url += "&longitude=9.18"
+url += "&hourly=temperature_2m,precipitation,weathercode"
+url += "&daily=sunrise,sunset,weathercode&timezone=Europe/Berlin"
+url += "&current_weather=true"
+url += "&timeformat=unixtime"
+url += "&start_date=2025-05-30"
+url += "&end_date=2025-05-31"
 
 r = requests.api.get(url)
-st = json.dumps(r.json()).replace('"', '\\"')
+# st = json.dumps(r.json()).replace('"', '\\"')
 
-for i in chunks(st, 70):
-    print('"' + i + '"')
+pprint(r.json())
+
+# for i in chunks(st, 70):
+#     print('"' + i + '"')
 
 # print(r.json()['coord'])
 # print(r.json()['main'])
