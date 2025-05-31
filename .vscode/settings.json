@@ -17,5 +17,6 @@
         "string.h": "c",
         "iterator": "c",
         "weather.h": "c"
-    }
+    },
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json"
 }
