@@ -41,6 +41,19 @@ wmo_get_weather_from_json(const uint8_t *buf, int len)
     tmp = cJSON_GetObjectItem(cw, "weathercode");
     w->current.wno_code = cJSON_GetNumberValue(tmp);
 
+    int now = time(NULL);
+
+    cw = cJSON_GetObjectItem(json, "daily");
+    tmp = cJSON_GetObjectItem(cw, "sunrise");
+
+    for( int i = 0; i < cJSON_GetArraySize(tmp); i++) {
+        el = cJSON_GetArrayItem(tmp, i);
+        w->daily.sunrise[i] = el->valueint;
+        t = cJSON_GetObjectItem(cw, "sunset");
+        el = cJSON_GetArrayItem(t, i);
+        w->daily.sunset[i] = el->valueint;
+    }
+
     cw = cJSON_GetObjectItem(json, "hourly");
     
     if( cw == NULL ) {

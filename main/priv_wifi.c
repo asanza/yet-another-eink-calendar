@@ -340,10 +340,11 @@ priv_wifi_get_open_meteo(char *buf)
 
     strftime(sdate, sizeof(sdate) - 1, "%Y-%m-%d", t);
     t->tm_mday += 1;
+    mktime(t);
     strftime(edate, sizeof(sdate) - 1, "%Y-%m-%d", t);
 
-    sprintf(path, "/v1/dwd-icon?latitude=48.78"
-        "&longitude=9.18"
+    sprintf(path, "/v1/dwd-icon?latitude=49.4725"
+        "&longitude=8.51556"
         "&hourly=temperature_2m,precipitation,weathercode"
         "&daily=sunrise,sunset,weathercode&timezone=Europe/Berlin"
         "&current_weather=true"

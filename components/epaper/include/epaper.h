@@ -27,8 +27,13 @@ void
 ep_draw_bwbuffer(const struct epd *p, uint8_t* buf, int len);
 
 /* draw booth buffers at once */
+#if CONFIG_7_5_INCH_BICOLOR_EPAPER_DRIVER
 void
-ep_draw(const struct epd* p, uint8_t *blk, uint8_t* red, int len);
+ep_draw(const struct epd* p, const uint8_t *buf, int len);
+#elif CONFIG_7_5_INCH_TRICOLOR_EPAPER_DRIVER
+void
+ep_draw(const struct epd* p, const uint8_t *blk, const uint8_t* red, int len);
+#endif
 
 /**
  * @brief Return the size in bytes needed for the framebuffer
