@@ -19,7 +19,7 @@ class EpaperScreen:
             filename = str(time.time()) + '.png'
             self.hti.screenshot(url=self.url, save_as=filename, size=self.size)
             with Image.open(os.path.join(path, filename)) as im:
-                r, g, b, a = im.split()
+                r, g, b= im.split()
                 im = Image.merge("RGB", (r, g, b))
                 im = im.convert('L')
                 im = im.point( lambda p: 255 if p > self.threshold else 0 )

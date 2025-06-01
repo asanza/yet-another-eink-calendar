@@ -32,7 +32,7 @@ struct wmo_daily_forecast {
     unsigned long wno_code[2];
     float max_temp_2m[2];
     float min_temp_2m[2];
-    float precipitation_probability_mean[2];
+    unsigned long precipitation_probability_mean[2];
 };
 
 struct wmo_hourly_forecast {
@@ -41,6 +41,7 @@ struct wmo_hourly_forecast {
     float temperature_2m[5];
     float precipitation[5];
     unsigned long timestamp[5];
+    unsigned long precipitation_probability[5];
 };
 
 struct wmo_weather {

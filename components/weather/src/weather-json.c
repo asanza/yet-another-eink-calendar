@@ -77,15 +77,18 @@ wmo_get_weather_from_json(const uint8_t *buf, int len)
             t = cJSON_GetObjectItem(cw, "precipitation");
             el = cJSON_GetArrayItem(t, i);
             w->hourly.precipitation[idx] = el->valuedouble;
+            t = cJSON_GetObjectItem(cw, "precipitation_probability");
+            el = cJSON_GetArrayItem(t, i);
+            w->hourly.precipitation_probability[idx] = el->valueint;
 
-            if( w->hourly.timestamp[idx] > w->daily.sunrise[1])
+            if( w->hourly.timestamp[idx] > w->daily.sunrise[0])
             {
                 w->hourly.is_day[idx] = true;
             } else {
                 w->hourly.is_day[idx] = false;
             }
 
-            if(w->hourly.timestamp[idx] > w->daily.sunset[1])
+            if(w->hourly.timestamp[idx] > w->daily.sunset[0])
             {
                 w->hourly.is_day[idx] = false;
             } else {

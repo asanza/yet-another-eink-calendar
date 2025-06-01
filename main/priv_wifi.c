@@ -345,8 +345,8 @@ priv_wifi_get_open_meteo(char *buf)
 
     sprintf(path, "/v1/dwd-icon?latitude=49.4725"
         "&longitude=8.51556"
-        "&hourly=temperature_2m,precipitation,weathercode"
-        "&daily=sunrise,sunset,weathercode&timezone=Europe/Berlin"
+        "&hourly=temperature_2m,precipitation,weathercode,precipitation_probability"
+        "&daily=sunrise,sunset,weathercode,precipitation_probability_mean&timezone=Europe/Berlin"
         "&current_weather=true"
         "&timeformat=unixtime"
         "&start_date=%s"

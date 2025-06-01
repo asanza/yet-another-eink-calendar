@@ -178,7 +178,7 @@ void draw_calendar(uint8_t *bbuf, uint8_t* rbuf)
 {
     const int width = 350;
     const int height = 350;
-    const int x0 = 0, y0 = 80;
+    const int x0 = 20, y0 = 80;
     const int xpad = 10;
     const int ypad = 10;
 
@@ -201,13 +201,13 @@ void draw_calendar(uint8_t *bbuf, uint8_t* rbuf)
 
     /* draws grid and header */
     for( int i = 0; i < 7; i++ ) {
-        // fgui_line(fgui, x0, y0 + rh * i, x0 + width, y0 + rh * i);
-        // fgui_line(fgui, x0 + cw * i, y0, x0 + cw * i, y0 + height);
+        fgui_line(fgui, x0, y0 + rh * i, x0 + width, y0 + rh * i);
+        fgui_line(fgui, x0 + cw * i, y0, x0 + cw * i, y0 + height);
         fgui_text(fgui, x0 + i * cw + xpad, y0 + ypad, weekdays[i]);
     }
 
-    // fgui_line(fgui, x0 + width, y0, x0 + width, y0 + height);
-    // fgui_line(fgui, x0, y0 + height, x0 + width, y0 + height);
+    fgui_line(fgui, x0 + width, y0, x0 + width, y0 + height);
+    fgui_line(fgui, x0, y0 + height, x0 + width, y0 + height);
 
     /* draws this month calendar */
     month_now = t->tm_mon + 1;

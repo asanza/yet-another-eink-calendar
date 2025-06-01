@@ -1,3 +1,8 @@
 requests>=2.25.1
 html2image>=1.2.3
 cherrypy>=18.8.0
+pillow>=11.2.1
+pytest>=8.3.5
+numpy>=2.2.6
+matplotlib>=3.10.3
+cbor2>=5.6.5
