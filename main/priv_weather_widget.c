@@ -36,6 +36,8 @@ draw_hourly( fgui_t fgui, const struct wmo_hourly_forecast *w, int idx,  int xpo
     fgui_setfont(fgui, &FONT_10X16);
     sprintf(text, "%02d:%02d", t.tm_hour, t.tm_min);
     fgui_text(fgui, xpos, ypos + 90, text);
+    sprintf(text, "%ld%%", w->precipitation_probability[idx]);
+    fgui_text(fgui, xpos, ypos + 110, text);
 }
 
 void
@@ -71,10 +73,10 @@ draw_weather_widget(fgui_t fgui, const struct wmo_weather *w)
     draw_hourly(fgui, &w->hourly, 3, x0 + 130, y0 + 300);
 
     fgui_setfont(fgui, &FONT_12X20);
-    t = get_time(w->daily.sunrise[0]);
-    sprintf(text, "sunrise: %02d:%02d", t.tm_hour, t.tm_min);
-    fgui_text(fgui, x0 - 165, y0 + 420, text);
-    t = get_time(w->daily.sunset[0]);
-    sprintf(text, "sunset : %02d:%02d", t.tm_hour, t.tm_min);
-    fgui_text(fgui, x0 - 165, y0 + 440, text);
+    t = get_time(w->daily.sunrise[1]);
+    sprintf(text, "sunrise: %02d:%02d:%02d", t.tm_hour, t.tm_min, t.tm_sec);
+    fgui_text(fgui, x0 - 265, y0 + 440, text);
+    t = get_time(w->daily.sunset[1]);
+    sprintf(text, "sunset : %02d:%02d:%02d", t.tm_hour, t.tm_min, t.tm_sec);
+    fgui_text(fgui, x0 - 15, y0 + 440, text);
 }

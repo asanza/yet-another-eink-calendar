@@ -6,7 +6,15 @@
 #include <weather.h>
 
 void priv_epaper_init( void );
+
+#if defined CONFIG_7_5_INCH_BICOLOR_EPAPER_DRIVER
+void priv_epaper_draw(const uint8_t* b, uint32_t len);
+#elif defined CONFIG_7_5_INCH_TRICOLOR_EPAPER_DRIVER
 void priv_epaper_draw(unsigned char* b, unsigned char* r);
+#else
+#error "Unsuported Driver"
+#endif
+
 void
 priv_epaper_sleep(void);
 void

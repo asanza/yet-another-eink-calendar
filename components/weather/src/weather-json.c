@@ -41,14 +41,25 @@ wmo_get_weather_from_json(const uint8_t *buf, int len)
     tmp = cJSON_GetObjectItem(cw, "weathercode");
     w->current.wno_code = cJSON_GetNumberValue(tmp);
 
+    int now = time(NULL);
+
+    cw = cJSON_GetObjectItem(json, "daily");
+    tmp = cJSON_GetObjectItem(cw, "sunrise");
+
+    for( int i = 0; i < cJSON_GetArraySize(tmp); i++) {
+        el = cJSON_GetArrayItem(tmp, i);
+        w->daily.sunrise[i] = el->valueint;
+        t = cJSON_GetObjectItem(cw, "sunset");
+        el = cJSON_GetArrayItem(t, i);
+        w->daily.sunset[i] = el->valueint;
+    }
+
     cw = cJSON_GetObjectItem(json, "hourly");
     
     if( cw == NULL ) {
         printf("No hourly\n");
         goto exit;
     }
-
-    int now = time(NULL) + 1800;
 
     tmp = cJSON_GetObjectItem(cw, "time");
 
@@ -66,22 +77,28 @@ wmo_get_weather_from_json(const uint8_t *buf, int len)
             t = cJSON_GetObjectItem(cw, "precipitation");
             el = cJSON_GetArrayItem(t, i);
             w->hourly.precipitation[idx] = el->valuedouble;
+            t = cJSON_GetObjectItem(cw, "precipitation_probability");
+            el = cJSON_GetArrayItem(t, i);
+            w->hourly.precipitation_probability[idx] = el->valueint;
+
+            if( w->hourly.timestamp[idx] > w->daily.sunrise[0])
+            {
+                w->hourly.is_day[idx] = true;
+            } else {
+                w->hourly.is_day[idx] = false;
+            }
+
+            if(w->hourly.timestamp[idx] > w->daily.sunset[0])
+            {
+                w->hourly.is_day[idx] = false;
+            } else {
+                w->hourly.is_day[idx] = true;
+            }
 
             if( idx++ >= ARRAY_SIZE(w->hourly.timestamp) - 1){
                 break;
             }
         }
-    }
-
-    cw = cJSON_GetObjectItem(json, "daily");
-    tmp = cJSON_GetObjectItem(cw, "sunrise");
-
-    for( int i = 0; i < cJSON_GetArraySize(tmp); i++) {
-        el = cJSON_GetArrayItem(tmp, i);
-        w->daily.sunrise[i] = el->valueint;
-        t = cJSON_GetObjectItem(cw, "sunset");
-        el = cJSON_GetArrayItem(t, i);
-        w->daily.sunset[i] = el->valueint;
     }
 
 exit:

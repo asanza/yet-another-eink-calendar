@@ -10,6 +10,8 @@
 #include <string.h>
 #include "esp_log.h"
 
+#if defined CONFIG_7_5_INCH_TRICOLOR_EPAPER_DRIVER
+
 static const char *TAG = "EPAPER";
 
 // Display resolution
@@ -253,3 +255,4 @@ ep_wakeup(const struct epd *drv)
     drv->delay_ms(100);
     epd_wait_idle(drv);
 }
+#endif

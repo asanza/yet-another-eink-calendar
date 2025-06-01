@@ -20,12 +20,22 @@
 #include "weather.h"
 #include "priv_weather_widget.h"
 
+#if 1
+#define BUSY_PIN  GPIO_NUM_4
+#define RESET_PIN GPIO_NUM_2
+#define DC_PIN    GPIO_NUM_5
+#define CS_PIN    GPIO_NUM_3
+#define MOSI_PIN  GPIO_NUM_10
+#define MISO_PIN  GPIO_NUM_9
+#define CLK_PIN   GPIO_NUM_8
+#else 
 #define BUSY_PIN  GPIO_NUM_25
 #define RESET_PIN GPIO_NUM_26
 #define DC_PIN    GPIO_NUM_27
 #define CS_PIN    GPIO_NUM_15
 #define MOSI_PIN  GPIO_NUM_14
 #define CLK_PIN   GPIO_NUM_13
+#endif
 
 #define MAX_TRANSFER_SIZE 4096
 
@@ -100,7 +110,13 @@ screen_init(void)
 static void
 draw_fn(const void *ctx, unsigned char *fb, unsigned char *fr, int len)
 {
+    #if CONFIG_7_5_INCH_BICOLOR_EPAPER_DRIVER
+    ep_draw(ctx, fb, len);
+    #elif CONFIG_7_5_INCH_TRICOLOR_EPAPER_DRIVER
     ep_draw(ctx, fb, fr, len);
+    #else
+    #error "Undefined Driver"
+    #endif
 }
 
 void
@@ -129,7 +145,7 @@ priv_epaper_init( void )
     spi_bus_config_t spi_bus = { 0 };
     spi_bus.mosi_io_num      = MOSI_PIN;
     spi_bus.sclk_io_num      = CLK_PIN;
-    spi_bus.miso_io_num      = -1;
+    spi_bus.miso_io_num      = MISO_PIN;
     spi_bus.quadhd_io_num    = -1;
     spi_bus.quadwp_io_num    = -1;
     spi_bus.max_transfer_sz  = MAX_TRANSFER_SIZE;
@@ -145,10 +161,10 @@ priv_epaper_init( void )
     spi_dev.pre_cb                        = NULL;
     spi_dev.post_cb                       = NULL;
 
-    ret = spi_bus_initialize(SPI3_HOST, &spi_bus, SPI_DMA_CH_AUTO);
+    ret = spi_bus_initialize(SPI2_HOST, &spi_bus, SPI_DMA_CH_AUTO);
     ESP_ERROR_CHECK(ret);
 
-    ret = spi_bus_add_device(SPI3_HOST, &spi_dev, &spi);
+    ret = spi_bus_add_device(SPI2_HOST, &spi_dev, &spi);
     ESP_ERROR_CHECK(ret);
 
     ep_init(&epd);
@@ -162,7 +178,7 @@ void draw_calendar(uint8_t *bbuf, uint8_t* rbuf)
 {
     const int width = 350;
     const int height = 350;
-    const int x0 = 0, y0 = 80;
+    const int x0 = 20, y0 = 80;
     const int xpad = 10;
     const int ypad = 10;
 
@@ -185,13 +201,13 @@ void draw_calendar(uint8_t *bbuf, uint8_t* rbuf)
 
     /* draws grid and header */
     for( int i = 0; i < 7; i++ ) {
-        // fgui_line(fgui, x0, y0 + rh * i, x0 + width, y0 + rh * i);
-        // fgui_line(fgui, x0 + cw * i, y0, x0 + cw * i, y0 + height);
+        fgui_line(fgui, x0, y0 + rh * i, x0 + width, y0 + rh * i);
+        fgui_line(fgui, x0 + cw * i, y0, x0 + cw * i, y0 + height);
         fgui_text(fgui, x0 + i * cw + xpad, y0 + ypad, weekdays[i]);
     }
 
-    // fgui_line(fgui, x0 + width, y0, x0 + width, y0 + height);
-    // fgui_line(fgui, x0, y0 + height, x0 + width, y0 + height);
+    fgui_line(fgui, x0 + width, y0, x0 + width, y0 + height);
+    fgui_line(fgui, x0, y0 + height, x0 + width, y0 + height);
 
     /* draws this month calendar */
     month_now = t->tm_mon + 1;
@@ -221,6 +237,8 @@ void draw_calendar(uint8_t *bbuf, uint8_t* rbuf)
             sprintf(text, "%2d", idx);
             fgui_text(fgui, xpad + x0 + cw * i, ypad + y0 + j * rh, text);
         }
+        fgui_set_bgcolor(fgui, FGUI_WHITE);
+        fgui_set_fgcolor(fgui, FGUI_BLACK);
     }
 
     sprintf(text, "Last Updated: %02d:%02d", t->tm_hour, t->tm_min);
@@ -249,13 +267,23 @@ priv_epaper_draw_calendar(char* json, uint8_t* bbuf, uint8_t* rbuf, bool ok)
     draw_calendar(bbuf, rbuf);
 }
 
-
+#if CONFIG_7_5_INCH_BICOLOR_EPAPER_DRIVER
+void
+priv_epaper_draw(const uint8_t *buf, uint32_t len)
+{
+    ep_clear(&epd);
+    ep_draw(&epd, buf, len);
+}
+#elif CONFIG_7_5_INCH_TRICOLOR_EPAPER_DRIVER
 void
 priv_epaper_draw(uint8_t *buf, uint8_t *rbuf)
 {
     ep_clear(&epd);
     ep_draw(&epd, buf, rbuf, 480 * 100);
 }
+#else
+#error "Unsuported epaper driver."
+#endif
 
 void
 priv_epaper_sleep(void)
