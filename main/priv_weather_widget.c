@@ -78,5 +78,5 @@ draw_weather_widget(fgui_t fgui, const struct wmo_weather *w)
     fgui_text(fgui, x0 - 265, y0 + 440, text);
     t = get_time(w->daily.sunset[1]);
     sprintf(text, "sunset : %02d:%02d:%02d", t.tm_hour, t.tm_min, t.tm_sec);
-    fgui_text(fgui, x0 - 35, y0 + 440, text);
+    fgui_text(fgui, x0 - 15, y0 + 440, text);
 }
