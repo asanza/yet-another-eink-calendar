@@ -12,10 +12,10 @@ dependencies:
   idf:
     source:
       type: idf
-    version: 5.4.1
+    version: 5.5.1
 direct_dependencies:
 - espressif/jsmn
 - idf
 manifest_hash: 3d1f8a92656a80ce0d2f4017a09c5256e4acb21d4d5ab8d0753edbfba2726587
-target: esp32c3
+target: esp32s3
 version: 2.0.0
